@@ -1,1 +1,212 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel TV — Персональний онлайн-телеканал</title>
+    <!-- Підключення шрифтів Studio Design System -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome для іконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
 
+    <!-- Стартова анімація збірки пікселів логотипу -->
+    <div id="intro-loader">
+        <img src="Знімок_екрана_2026-09-14_010947-removebg-preview.png" alt="Pixel TV Logo" class="loader-logo-img">
+    </div>
+
+    <!-- Шапка сайту -->
+    <header id="site-header">
+        <div class="header-left">
+            <a href="#" class="logo-link">
+                <img src="Знімок_екрана_2026-09-14_010947-removebg-preview.png" alt="Pixel TV">
+            </a>
+            <nav class="main-nav">
+                <a href="#player" class="active">Ефір</a>
+                <a href="#schedule">Розклад</a>
+                <a href="#archive">Архів</a>
+                <a href="#about">Про канал</a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="live-badge" id="header-live-badge">
+                <span class="live-dot"></span> В ефірі
+            </div>
+            <button class="search-btn" title="Пошук"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button class="burger-menu" id="burger-btn"><i class="fa-solid fa-bars"></i></button>
+        </div>
+    </header>
+
+    <!-- Головна частина -->
+    <main>
+        <!-- Плеєр секція -->
+        <section class="player-section" id="player">
+            <div class="player-container">
+                <!-- Відеоплеєр (можна підключити потокове відео або демонстраційне) -->
+                <video id="main-video" controls autoplay muted poster="">
+                    <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                    Ваш браузер не підтримує відео плеєр.
+                </video>
+
+                <!-- Екран очікування (активується, коли ефіру немає) -->
+                <div class="offline-screen" id="offline-screen" style="display: none;">
+                    <div class="offline-title">ЕФІР ЗАВЕРШЕНО</div>
+                    <div class="offline-timer" id="countdown-timer">НАСТУПНИЙ ВИПУСК ЧЕРЕЗ: 02:14:50</div>
+                    <div class="offline-desc">Слідкуйте за розкладом передач, щоб не пропустити наступні включення нашого телеканалу.</div>
+                </div>
+            </div>
+
+            <!-- Мета-інформація ефіру -->
+            <div class="broadcast-meta">
+                <div class="meta-left">
+                    <h1 id="current-show-title">Великий студійний ранок: Головні події дня</h1>
+                    <p id="current-show-desc">Аналітичний огляд актуальних новин, ексклюзивні включення з місця подій, інтерв'ю з експертами та обговорення ключових тем у прямому ефірі Pixel TV.</p>
+                </div>
+                <div class="meta-right">
+                    <div class="viewers-counter">
+                        <i class="fa-regular fa-eye"></i> <span id="viewers-count">1 234</span> глядачів у прямому ефірі
+                    </div>
+                    <div class="next-broadcast-teaser">
+                        Далі в ефірі: <span id="next-show-name">Технології майбутнього</span> о <span>20:00</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Розклад (ТВ-гід) -->
+        <section class="schedule-section" id="schedule">
+            <div class="section-header">
+                <h2 class="section-title">Телегід і розклад</h2>
+                <div class="schedule-tabs">
+                    <button class="tab-btn active" data-day="today">Сьогодні</button>
+                    <button class="tab-btn" data-day="tomorrow">Завтра</button>
+                    <button class="tab-btn" data-day="wed">Ср</button>
+                    <button class="tab-btn" data-day="thu">Чт</button>
+                    <button class="tab-btn" data-day="fri">Пт</button>
+                </div>
+            </div>
+
+            <div class="schedule-timeline" id="schedule-container">
+                <!-- Картки розкладу генеруються або виводяться статично -->
+                <div class="schedule-card">
+                    <div class="schedule-time">19:00 — 20:00</div>
+                    <h3>Вечірній стрім</h3>
+                    <p>Інтерактивне спілкування з глядачами та огляд свіжих новінок техніки.</p>
+                    <button class="reminder-btn" onclick="toggleReminder(this, 'Вечірній стрім')"><i class="fa-regular fa-bell"></i> Нагадати</button>
+                </div>
+
+                <div class="schedule-card current">
+                    <div class="schedule-time">20:00 — 21:30</div>
+                    <h3>Технології майбутнього</h3>
+                    <p>Спеціальний випуск присвячений новітнім трендам у розробці та симуляторах.</p>
+                    <button class="reminder-btn active"><i class="fa-solid fa-check"></i> Нагадали</button>
+                </div>
+
+                <div class="schedule-card">
+                    <div class="schedule-time">21:30 — 23:00</div>
+                    <h3>Студійний кінозал</h3>
+                    <p>Добірний кінематограф без перерви на рекламу.</p>
+                    <button class="reminder-btn" onclick="toggleReminder(this, 'Студійний кінозал')"><i class="fa-regular fa-bell"></i> Нагадати</button>
+                </div>
+
+                <div class="schedule-card">
+                    <div class="schedule-time">23:00 — 00:00</div>
+                    <h3>Нічний піксельний мікс</h3>
+                    <p>Розслаблююча музична підбірка для спокійного завершення вечора.</p>
+                    <button class="reminder-btn" onclick="toggleReminder(this, 'Нічний піксельний мікс')"><i class="fa-regular fa-bell"></i> Нагадати</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Архів ефірів -->
+        <section class="archive-section" id="archive">
+            <div class="section-header">
+                <h2 class="section-title">Архів ефірів</h2>
+                <div class="archive-filters">
+                    <select class="filter-select" id="category-filter">
+                        <option value="all">Усі категорії</option>
+                        <option value="news">Новини та аналітика</option>
+                        <option value="tech">Технології</option>
+                        <option value="entertainment">Розваги</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="archive-grid">
+                <!-- Картка архіву 1 -->
+                <div class="archive-card">
+                    <div class="thumbnail-wrapper">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop" alt="Архів трансляції">
+                        <div class="play-overlay-icon">
+                            <div class="play-circle"><i class="fa-solid fa-play"></i></div>
+                        </div>
+                    </div>
+                    <div class="archive-meta">
+                        <div class="archive-info-row">
+                            <span>12 вересня 2026</span>
+                            <span>1 год 42 хв</span>
+                        </div>
+                        <h3>Студійний випуск №142: Штучний інтелект у розробці</h3>
+                    </div>
+                </div>
+
+                <!-- Картка архіву 2 -->
+                <div class="archive-card">
+                    <div class="thumbnail-wrapper">
+                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" alt="Архів трансляції">
+                        <div class="play-overlay-icon">
+                            <div class="play-circle"><i class="fa-solid fa-play"></i></div>
+                        </div>
+                    </div>
+                    <div class="archive-meta">
+                        <div class="archive-info-row">
+                            <span>10 вересня 2026</span>
+                            <span>2 год 15 хв</span>
+                        </div>
+                        <h3>Великий тест нових симуляторів та рулів</h3>
+                    </div>
+                </div>
+
+                <!-- Картка архіву 3 -->
+                <div class="archive-card">
+                    <div class="thumbnail-wrapper">
+                        <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=600&auto=format&fit=crop" alt="Архів трансляції">
+                        <div class="play-overlay-icon">
+                            <div class="play-circle"><i class="fa-solid fa-play"></i></div>
+                        </div>
+                    </div>
+                    <div class="archive-meta">
+                        <div class="archive-info-row">
+                            <span>08 вересня 2026</span>
+                            <span>1 год 10 хв</span>
+                        </div>
+                        <h3>Вечірній стрім з обговоренням мап та модів</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Підвал -->
+    <footer id="about">
+        <div class="footer-left">
+            <p>&copy; 2026 Pixel TV. Персональний онлайн-телеканал. Усі права захищено.</p>
+        </div>
+        <div class="footer-links">
+            <a href="#">Про канал</a>
+            <a href="#">Правила ефіру</a>
+            <a href="#">Контакти</a>
+            <a href="#">Соцмережі</a>
+        </div>
+    </footer>
+
+    <!-- Toast сповіщення -->
+    <div id="toast-notification">Нагадування встановлено!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

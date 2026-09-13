@@ -1,4 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    // ГОЛОВНИЙ ПЕРЕМИКАЧ ЕФІРУ:
+    // Постав true, якщо зараз йде трансляція (в ефірі).
+    // Постав false, якщо ефір закінчився (показуватиме "Ефір завершено" та заставку).
+    const isLiveNow = true; 
+
+    const statusBadge = document.getElementById('site-status-badge');
+    const statusText = document.getElementById('status-text');
+    const mainVideo = document.getElementById('main-video');
+    const offlineScreen = document.getElementById('offline-screen');
+
+    if (isLiveNow) {
+        // Якщо ефір йде
+        statusBadge.classList.remove('offline');
+        statusText.textContent = "В ефірі";
+        if (mainVideo) mainVideo.style.display = 'block';
+        if (offlineScreen) offlineScreen.style.display = 'none';
+    } else {
+        // Якщо ефіру немає
+        statusBadge.classList.add('offline');
+        statusText.textContent = "Ефір завершено";
+        if (mainVideo) mainVideo.style.display = 'none';
+        if (offlineScreen) offlineScreen.style.display = 'flex';
+    }
     
     window.toggleReminder = function(buttonElement, showName) {
         const isActive = buttonElement.classList.contains('active');

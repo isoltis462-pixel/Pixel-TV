@@ -134,7 +134,6 @@ nav.main-nav a.active {
     transition: all 0.3s ease;
 }
 
-/* Стиль, коли ефіру немає (сірий індикатор) */
 .live-badge.offline {
     background-color: rgba(155, 161, 176, 0.1);
     border-color: var(--text-muted);

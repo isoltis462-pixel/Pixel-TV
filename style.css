@@ -65,8 +65,7 @@ body {
     gap: 40px;
 }
 
-/* ЖОРСТКЕ ОБМЕЖЕННЯ РОЗМІРУ ЛОГОТИПА ЩОБ НЕЇДЕ ВЕРСТКА */
-.logo-link img, #site-header img {
+.logo-link img {
     height: 35px !important;
     max-height: 35px !important;
     width: auto !important;
@@ -287,7 +286,6 @@ footer {
     opacity: 1;
 }
 
-/* Стилі телегіду і розкладу */
 .schedule-section {
     margin-top: 50px;
 }
@@ -393,4 +391,64 @@ footer {
     background: var(--tally-red);
     border-color: var(--tally-red);
     color: white;
+}
+
+/* МОБІЛЬНИЙ АДАПТИВ (ДЛЯ ТЕЛЕФОНІВ) */
+@media (max-width: 768px) {
+    #site-header {
+        padding: 12px 20px;
+    }
+    
+    .header-left {
+        gap: 15px;
+    }
+
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--panel-graphite);
+        flex-direction: column;
+        padding: 20px;
+        border-bottom: 1px solid var(--border-color);
+        gap: 15px;
+    }
+
+    .main-nav.open {
+        display: flex;
+    }
+
+    .burger-menu {
+        display: block;
+    }
+
+    .broadcast-meta {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .schedule-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .reminder-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .footer-links {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 }

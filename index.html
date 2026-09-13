@@ -28,7 +28,6 @@
             </nav>
         </div>
         <div class="header-right">
-            <!-- Динамічний бейджик статусу ефіру -->
             <div class="live-badge" id="site-status-badge">
                 <span class="live-dot" id="status-dot"></span> <span id="status-text">В ефірі</span>
             </div>
@@ -40,28 +39,26 @@
     <main>
         <section class="player-section" id="player">
             <div class="player-container">
-                <!-- Відеоплеєр (відображається, коли є ефір) -->
                 <video id="main-video" controls autoplay muted>
                     <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
                     Ваш браузер не підтримує відео плеєр.
                 </video>
 
-                <!-- Екран очікування (автоматично вмикається, коли ефіру немає) -->
                 <div class="offline-screen" id="offline-screen" style="display: none;">
                     <div class="offline-title">ЕФІР ЗАВЕРШЕНО</div>
-                    <div class="offline-timer" id="countdown-timer">НАСТУПНИЙ ВИПУСК ЧЕРЕЗ: 02:14:50</div>
-                    <div class="offline-desc">Слідкуйте за розкладом передач, щоб не пропустити наступні включення нашого телеканалу.</div>
+                    <div class="offline-timer" id="countdown-timer">НАСТУПНИЙ СЕАНС ЧЕРЕЗ: 02:14:50</div>
+                    <div class="offline-desc">Слідкуйте за розкладом сеансів та показів, щоб не пропустити улюблені фільми та мультфільми.</div>
                 </div>
             </div>
 
             <div class="broadcast-meta">
                 <div class="meta-left">
-                    <h1 id="current-show-title">Великий студійний ранок: Головні події дня</h1>
-                    <p id="current-show-desc">Аналітичний огляд актуальних новин, ексклюзивні включення з місця подій, інтерв'ю з експертами та обговорення ключових тем у прямому ефірі Pixel TV.</p>
+                    <h1 id="current-show-title">Кінозал Pixel TV: Обрані фільми та мультфільми</h1>
+                    <p id="current-show-desc">Дивіться у найкращій якості улюблені анімаційні стрічки, кіно та архівні записи трансляцій без перерви на рекламу.</p>
                 </div>
                 <div class="meta-right">
                     <div class="next-broadcast-teaser">
-                        Далі в ефірі: <span id="next-show-name">Технології майбутнього</span> о <span>20:00</span>
+                        Далі в ефірі: <span id="next-show-name">Анімаційний блок</span> о <span>20:00</span>
                     </div>
                 </div>
             </div>
@@ -82,23 +79,23 @@
             <div class="schedule-timeline" id="schedule-container">
                 <div class="schedule-card">
                     <div class="schedule-time">19:00 — 20:00</div>
-                    <h3>Вечірній стрім</h3>
-                    <p>Інтерактивне спілкування з глядачами та огляд свіжих новінок техніки.</p>
-                    <button class="reminder-btn" onclick="toggleReminder(this, 'Вечірній стрім')"><i class="fa-regular fa-bell"></i> Нагадати</button>
+                    <h3>Мульт-колаж</h3>
+                    <p>Добірка найкращих короткометражних анімацій та мультфільмів.</p>
+                    <button class="reminder-btn" onclick="toggleReminder(this, 'Мульт-колаж')"><i class="fa-regular fa-bell"></i> Нагадати</button>
                 </div>
 
                 <div class="schedule-card current">
                     <div class="schedule-time">20:00 — 21:30</div>
-                    <h3>Технології майбутнього</h3>
-                    <p>Спеціальний випуск присвячений новітнім трендам у розробці та симуляторах.</p>
+                    <h3>Вечірній кіносеанс</h3>
+                    <p>Художній фільм або архівний запис захопливої трансляції.</p>
                     <button class="reminder-btn active"><i class="fa-solid fa-check"></i> Нагадали</button>
                 </div>
 
                 <div class="schedule-card">
                     <div class="schedule-time">21:30 — 23:00</div>
-                    <h3>Студійний кінозал</h3>
-                    <p>Добірний кінематограф без перерви на рекламу.</p>
-                    <button class="reminder-btn" onclick="toggleReminder(this, 'Студійний кінозал')"><i class="fa-regular fa-bell"></i> Нагадати</button>
+                    <h3>Кінозал: Повтор</h3>
+                    <p>Показ улюблених глядачами стрічок із нашої відеотеки.</p>
+                    <button class="reminder-btn" onclick="toggleReminder(this, 'Кінозал: Повтор')"><i class="fa-regular fa-bell"></i> Нагадати</button>
                 </div>
 
                 <div class="schedule-card">

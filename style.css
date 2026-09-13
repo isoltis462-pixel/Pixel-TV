@@ -65,10 +65,12 @@ body {
     gap: 40px;
 }
 
-.logo-link img {
-    height: 35px;
-    width: auto;
-    display: block;
+/* ЖОРСТКЕ ОБМЕЖЕННЯ РОЗМІРУ ЛОГОТИПА ЩОБ НЕЇДЕ ВЕРСТКА */
+.logo-link img, #site-header img {
+    height: 35px !important;
+    max-height: 35px !important;
+    width: auto !important;
+    display: block !important;
 }
 
 .main-nav {

@@ -292,7 +292,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
     flex-wrap: wrap;
     gap: 20px;
 }
@@ -316,7 +316,7 @@ main {
     background: none;
     border: none;
     color: var(--text-muted);
-    padding: 8px 16px;
+    padding: 8px 20px;
     font-family: var(--font-sans);
     font-size: 14px;
     cursor: pointer;
@@ -330,58 +330,66 @@ main {
     font-weight: 500;
 }
 
-.schedule-timeline {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
+/* Компактний список для максимальної місткості */
+.schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.schedule-card {
+.schedule-row {
     background-color: var(--panel-graphite);
     border: 1px solid var(--border-color);
-    padding: 20px;
-    border-radius: 8px;
-    position: relative;
+    padding: 14px 20px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
     transition: background-color 0.2s, border-color 0.2s;
 }
 
-.schedule-card:hover {
+.schedule-row:hover {
     background-color: var(--panel-hover);
     border-color: var(--text-muted);
 }
 
-.schedule-card.current {
+.schedule-row.current {
     border-color: var(--tally-red);
-    background-color: rgba(255, 42, 42, 0.03);
+    background-color: rgba(255, 42, 42, 0.04);
 }
 
 .schedule-time {
     font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--tally-red);
-    margin-bottom: 8px;
-}
-.schedule-card:not(.current) .schedule-time {
-    color: var(--text-muted);
-}
-
-.schedule-card h3 {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
-    margin-bottom: 6px;
+    color: var(--tally-red);
+    min-width: 60px;
+}
+.schedule-row:not(.current) .schedule-time {
+    color: var(--text-muted);
 }
 
-.schedule-card p {
+.schedule-info {
+    flex-grow: 1;
+}
+
+.schedule-info h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.schedule-info p {
     font-size: 13px;
     color: var(--text-muted);
-    margin-bottom: 14px;
 }
 
 .reminder-btn {
     background: none;
     border: 1px solid var(--border-color);
     color: var(--text-muted);
-    padding: 6px 12px;
+    padding: 6px 14px;
     font-size: 12px;
     cursor: pointer;
     border-radius: 4px;
@@ -389,6 +397,7 @@ main {
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    white-space: nowrap;
 }
 
 .reminder-btn:hover {
@@ -450,5 +459,7 @@ footer {
     .broadcast-meta { flex-direction: column; padding: 20px; align-items: flex-start; }
     .meta-right { align-items: flex-start; width: 100%; }
     .schedule-section { padding: 40px 20px; }
+    .schedule-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .reminder-btn { width: 100%; justify-content: center; }
     footer { flex-direction: column; gap: 20px; align-items: flex-start; padding: 30px 20px; }
 }

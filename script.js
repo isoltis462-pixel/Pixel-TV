@@ -39,9 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tabButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
-            // Тут можна додати підвантаження розкладу для обраного дня
             const day = btn.getAttribute('data-day');
-            console.2str ? console.log(`Обрано день: ${day}`) : null;
+            console.log(`Обрано день: ${day}`);
         });
     });
 
@@ -65,18 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 mainNav.style.borderBottom = '1px solid var(--border-color)';
             }
         });
-    }
-
-    // 4. Імітація оновлення лічильника глядачів у реальному часі
-    const viewersSpan = document.getElementById('viewers-count');
-    if (viewersSpan) {
-        setInterval(() => {
-            let currentViewers = parseInt(viewersSpan.textContent.replace(/\s/g, '')) || 1234;
-            // Випадкова зміна кількості глядачів на невелику величину (+/- кілька людей)
-            let change = Math.floor(Math.random() * 11) - 5; 
-            currentViewers = Math.max(100, currentViewers + change);
-            viewersSpan.textContent = currentViewers.toLocaleString('uk-UA');
-        }, 6000);
     }
 
 });

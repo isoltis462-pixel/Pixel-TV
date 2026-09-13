@@ -1,7 +1,3 @@
-/* ==========================================
-   PIXEL TV — Studio Design System (style.css)
-   ========================================== */
-
 :root {
     --bg-deep: #08080a;
     --bg-player: #000000;
@@ -36,7 +32,6 @@ body {
     line-height: 1.5;
 }
 
-/* Стартова анімація збірки пікселів логотипу */
 #intro-loader {
     position: fixed;
     top: 0;
@@ -59,26 +54,14 @@ body {
 }
 
 @keyframes assembleLogo {
-    0% {
-        transform: scale(0.6) translateY(20px);
-        opacity: 0;
-        filter: blur(10px);
-    }
-    100% {
-        transform: scale(1) translateY(0);
-        opacity: 1;
-        filter: blur(0);
-    }
+    0% { transform: scale(0.6) translateY(20px); opacity: 0; filter: blur(10px); }
+    100% { transform: scale(1) translateY(0); opacity: 1; filter: blur(0); }
 }
 
 @keyframes fadeOutLoader {
-    to {
-        opacity: 0;
-        visibility: hidden;
-    }
+    to { opacity: 0; visibility: hidden; }
 }
 
-/* Шапка сайту */
 header {
     position: fixed;
     top: 0;
@@ -134,7 +117,6 @@ nav.main-nav a.active {
     gap: 20px;
 }
 
-/* Сигнальний бейдж В ЕФІРІ */
 .live-badge {
     display: inline-flex;
     align-items: center;
@@ -142,7 +124,7 @@ nav.main-nav a.active {
     background-color: rgba(255, 42, 42, 0.15);
     border: 1px solid var(--tally-red);
     padding: 6px 12px;
-    border-radius: 0px; /* Геометричні кути */
+    border-radius: 0px;
     font-family: var(--font-mono);
     font-size: 12px;
     font-weight: 600;
@@ -174,9 +156,7 @@ nav.main-nav a.active {
     font-size: 18px;
     transition: color 0.2s;
 }
-.search-btn:hover {
-    color: var(--text-main);
-}
+.search-btn:hover { color: var(--text-main); }
 
 .burger-menu {
     display: none;
@@ -187,12 +167,10 @@ nav.main-nav a.active {
     cursor: pointer;
 }
 
-/* Головний контейнер */
 main {
     margin-top: 72px;
 }
 
-/* Плеєр секція */
 .player-section {
     width: 100%;
     background-color: var(--bg-player);
@@ -217,7 +195,6 @@ main {
     object-fit: cover;
 }
 
-/* Екран очікування, коли ефіру немає */
 .offline-screen {
     position: absolute;
     inset: 0;
@@ -250,7 +227,6 @@ main {
     max-width: 400px;
 }
 
-/* Інфо під плеєром */
 .broadcast-meta {
     max-width: 1400px;
     margin: 0 auto;
@@ -302,12 +278,10 @@ main {
     font-weight: 500;
 }
 
-/* Розклад (ТВ-гід) */
 .schedule-section {
     max-width: 1400px;
     margin: 0 auto;
     padding: 60px 40px;
-    border-bottom: 1px solid var(--border-color);
 }
 
 .section-header {
@@ -362,7 +336,7 @@ main {
     background-color: var(--panel-graphite);
     border: 1px solid var(--border-color);
     padding: 20px;
-    border-radius: 8px; /* Зручні для сканування скруглені кути для карток */
+    border-radius: 8px;
     position: relative;
     transition: background-color 0.2s, border-color 0.2s;
 }
@@ -424,119 +398,6 @@ main {
     border-color: var(--text-main);
 }
 
-/* Архів ефірів */
-.archive-section {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 60px 40px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.archive-filters {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 30px;
-}
-
-.filter-select {
-    background-color: var(--panel-graphite);
-    border: 1px solid var(--border-color);
-    color: var(--text-main);
-    padding: 8px 14px;
-    font-family: var(--font-sans);
-    font-size: 14px;
-    cursor: pointer;
-    outline: none;
-}
-
-.archive-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 24px;
-}
-
-.archive-card {
-    background-color: var(--panel-graphite);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: border-color 0.2s;
-}
-
-.archive-card:hover {
-    border-color: var(--text-muted);
-}
-
-.thumbnail-wrapper {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background-color: #000;
-    overflow: hidden;
-}
-
-.thumbnail-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* За замовчуванням ч/б і приглушені */
-    filter: grayscale(100%) brightness(0.85);
-    transition: filter 0.4s ease;
-}
-
-/* При наведенні мініатюри «оживають» у повному кольорі */
-.archive-card:hover .thumbnail-wrapper img {
-    filter: grayscale(0%) brightness(1);
-}
-
-.play-overlay-icon {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.3);
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.archive-card:hover .play-overlay-icon {
-    opacity: 1;
-}
-
-.play-circle {
-    width: 48px;
-    height: 48px;
-    background-color: var(--text-main);
-    color: var(--bg-deep);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    padding-left: 3px; /* Візуальне центрування іконки play */
-}
-
-.archive-meta {
-    padding: 16px;
-}
-
-.archive-info-row {
-    display: flex;
-    justify-content: space-between;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-}
-
-.archive-meta h3 {
-    font-size: 16px;
-    font-weight: 500;
-}
-
-/* Підвал */
 footer {
     max-width: 1400px;
     margin: 0 auto;
@@ -546,6 +407,7 @@ footer {
     align-items: center;
     color: var(--text-muted);
     font-size: 14px;
+    border-top: 1px solid var(--border-color);
 }
 
 .footer-links {
@@ -558,11 +420,8 @@ footer {
     text-decoration: none;
     transition: color 0.2s;
 }
-.footer-links a:hover {
-    color: var(--text-main);
-}
+.footer-links a:hover { color: var(--text-main); }
 
-/* Toast сповіщення знизу */
 #toast-notification {
     position: fixed;
     bottom: -60px;
@@ -578,37 +437,14 @@ footer {
     transition: bottom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 2000;
 }
-#toast-notification.show {
-    bottom: 30px;
-}
+#toast-notification.show { bottom: 30px; }
 
-/* Адаптивність */
 @media (max-width: 900px) {
-    header {
-        padding: 0 20px;
-    }
-    nav.main-nav {
-        display: none;
-    }
-    .burger-menu {
-        display: block;
-    }
-    .broadcast-meta {
-        flex-direction: column;
-        padding: 20px;
-        align-items: flex-start;
-    }
-    .meta-right {
-        align-items: flex-start;
-        width: 100%;
-    }
-    .schedule-section, .archive-section {
-        padding: 40px 20px;
-    }
-    footer {
-        flex-direction: column;
-        gap: 20px;
-        align-items: flex-start;
-        padding: 30px 20px;
-    }
+    header { padding: 0 20px; }
+    nav.main-nav { display: none; }
+    .burger-menu { display: block; }
+    .broadcast-meta { flex-direction: column; padding: 20px; align-items: flex-start; }
+    .meta-right { align-items: flex-start; width: 100%; }
+    .schedule-section { padding: 40px 20px; }
+    footer { flex-direction: column; gap: 20px; align-items: flex-start; padding: 30px 20px; }
 }

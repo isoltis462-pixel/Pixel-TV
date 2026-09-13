@@ -4,22 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pixel TV — Персональний онлайн-телеканал</title>
-    <!-- Підключення шрифтів Studio Design System -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- FontAwesome для іконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Стартова анімація збірки пікселів логотипу -->
     <div id="intro-loader">
         <img src="Знімок_екрана_2026-09-14_010947-removebg-preview.png" alt="Pixel TV Logo" class="loader-logo-img">
     </div>
 
-    <!-- Шапка сайту -->
     <header id="site-header">
         <div class="header-left">
             <a href="#" class="logo-link">
@@ -40,18 +36,14 @@
         </div>
     </header>
 
-    <!-- Головна частина -->
     <main>
-        <!-- Плеєр секція -->
         <section class="player-section" id="player">
             <div class="player-container">
-                <!-- Відеоплеєр -->
                 <video id="main-video" controls autoplay muted poster="">
                     <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
                     Ваш браузер не підтримує відео плеєр.
                 </video>
 
-                <!-- Екран очікування (активується, коли ефіру немає) -->
                 <div class="offline-screen" id="offline-screen" style="display: none;">
                     <div class="offline-title">ЕФІР ЗАВЕРШЕНО</div>
                     <div class="offline-timer" id="countdown-timer">НАСТУПНИЙ ВИПУСК ЧЕРЕЗ: 02:14:50</div>
@@ -59,7 +51,6 @@
                 </div>
             </div>
 
-            <!-- Мета-інформація ефіру -->
             <div class="broadcast-meta">
                 <div class="meta-left">
                     <h1 id="current-show-title">Великий студійний ранок: Головні події дня</h1>
@@ -76,7 +67,6 @@
             </div>
         </section>
 
-        <!-- Розклад (ТВ-гід) -->
         <section class="schedule-section" id="schedule">
             <div class="section-header">
                 <h2 class="section-title">Телегід і розклад</h2>
@@ -121,7 +111,6 @@
         </section>
     </main>
 
-    <!-- Підвал -->
     <footer id="about">
         <div class="footer-left">
             <p>&copy; 2026 Pixel TV. Персональний онлайн-телеканал. Усі права захищено.</p>
@@ -134,8 +123,44 @@
         </div>
     </footer>
 
-    <!-- Toast сповіщення -->
     <div id="toast-notification">Нагадування встановлено!</div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, onValue, push, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAmCzZAEKq4BMo6eWAN96IawhF95cH1sHM",
+            authDomain: "keysbrawl-c4ae6.firebaseapp.com",
+            databaseURL: "https://keysbrawl-c4ae6-default-rtdb.firebaseio.com",
+            projectId: "keysbrawl-c4ae6",
+            storageBucket: "keysbrawl-c4ae6.firebasestorage.app",
+            messagingSenderId: "1090859079662",
+            appId: "1:1090859079662:web:932bf6463cb0601083a0ff",
+            measurementId: "G-PJR0BQBYVM"
+        };
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            const db = getDatabase(app);
+            
+            const connectionsRef = ref(db, 'counter/active_connections');
+            const myConnectionRef = push(connectionsRef);
+
+            onDisconnect(myConnectionRef).remove();
+
+            onValue(connectionsRef, (snapshot) => {
+                const data = snapshot.val();
+                const count = data ? Object.keys(data).length : 1;
+                const viewersSpan = document.getElementById('viewers-count');
+                if (viewersSpan) {
+                    viewersSpan.textContent = count;
+                }
+            });
+        } catch (e) {
+            console.error("Firebase connection error:", e);
+        }
+    </script>
 
     <script src="script.js"></script>
 </body>

@@ -1,16 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Примусово ховаємо лоадер через 1 секунду
     setTimeout(() => {
         const loader = document.getElementById("intro-loader");
         if (loader) {
             loader.style.opacity = "0";
-            setTimeout(() => {
-                loader.style.display = "none";
-            }, 500);
+            setTimeout(() => loader.style.display = "none", 500);
         }
     }, 1000);
 
-    // Логіка перемикання днів у розкладі
     const tabBtns = document.querySelectorAll(".tab-btn");
     tabBtns.forEach(btn => {
         btn.addEventListener("click", () => {
@@ -21,6 +17,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     loadSchedule("today");
+
+    // Мобільне меню (бургер)
+    const burgerBtn = document.getElementById("burger-btn");
+    const mainNav = document.querySelector(".main-nav");
+    if (burgerBtn && mainNav) {
+        burgerBtn.addEventListener("click", () => {
+            mainNav.classList.toggle("open");
+        });
+    }
 });
 
 function loadSchedule(day) {

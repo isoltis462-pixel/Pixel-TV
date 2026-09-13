@@ -1,12 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Примусово ховаємо лоадер через 1 секунду
     setTimeout(() => {
         const loader = document.getElementById("intro-loader");
         if (loader) {
             loader.style.opacity = "0";
-            setTimeout(() => loader.style.display = "none", 500);
+            setTimeout(() => {
+                loader.style.display = "none";
+            }, 500);
         }
     }, 1000);
 
+    // Логіка перемикання днів у розкладі
     const tabBtns = document.querySelectorAll(".tab-btn");
     tabBtns.forEach(btn => {
         btn.addEventListener("click", () => {
@@ -25,7 +29,6 @@ function loadSchedule(day) {
 
     let scheduleData = JSON.parse(localStorage.getItem("pixel_tv_schedule"));
     
-    // Якщо в localStorage нічого немає — підтягуємо стандартний розклад за замовчуванням
     if (!scheduleData) {
         scheduleData = {
             today: [

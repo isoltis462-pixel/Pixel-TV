@@ -57,9 +57,6 @@
                     <p id="current-show-desc">Аналітичний огляд актуальних новин, ексклюзивні включення з місця подій, інтерв'ю з експертами та обговорення ключових тем у прямому ефірі Pixel TV.</p>
                 </div>
                 <div class="meta-right">
-                    <div class="viewers-counter">
-                        <i class="fa-regular fa-eye"></i> <span id="viewers-count">1</span> глядач онлайн
-                    </div>
                     <div class="next-broadcast-teaser">
                         Далі в ефірі: <span id="next-show-name">Технології майбутнього</span> о <span>20:00</span>
                     </div>
@@ -125,9 +122,10 @@
 
     <div id="toast-notification">Нагадування встановлено!</div>
 
+    <!-- Firebase SDK (фонове підключення бази даних) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getDatabase, ref, onValue, push, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        import { getDatabase, ref, push, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAmCzZAEKq4BMo6eWAN96IawhF95cH1sHM",
@@ -144,19 +142,10 @@
             const app = initializeApp(firebaseConfig);
             const db = getDatabase(app);
             
+            // Фіксація активної сесії у базі
             const connectionsRef = ref(db, 'counter/active_connections');
             const myConnectionRef = push(connectionsRef);
-
             onDisconnect(myConnectionRef).remove();
-
-            onValue(connectionsRef, (snapshot) => {
-                const data = snapshot.val();
-                const count = data ? Object.keys(data).length : 1;
-                const viewersSpan = document.getElementById('viewers-count');
-                if (viewersSpan) {
-                    viewersSpan.textContent = count;
-                }
-            });
         } catch (e) {
             console.error("Firebase connection error:", e);
         }

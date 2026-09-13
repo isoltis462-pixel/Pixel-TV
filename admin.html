@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="style.css">
     <style>
         .admin-container {
-            max-width: 600px;
-            margin: 100px auto;
+            max-width: 800px;
+            margin: 40px auto;
             background: var(--panel-graphite);
             border: 1px solid var(--border-color);
             padding: 30px;
@@ -22,23 +22,71 @@
             margin-bottom: 8px;
             font-weight: 500;
         }
-        .admin-group select, .admin-group input {
+        .admin-group select, .admin-group input, .admin-group textarea {
             width: 100%;
             padding: 10px;
             background: var(--bg-deep);
             border: 1px solid var(--border-color);
             color: var(--text-main);
             border-radius: 4px;
+            font-family: var(--font-sans);
+        }
+        .schedule-editor-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+            background: var(--bg-deep);
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        .schedule-editor-row input {
+            margin: 0;
+        }
+        .del-row-btn {
+            background: rgba(255, 42, 42, 0.2);
+            color: var(--tally-red);
+            border: 1px solid var(--tally-red);
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .add-row-btn, .save-admin-btn {
+            background: var(--text-main);
+            color: var(--bg-deep);
+            border: none;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 4px;
+            margin-top: 5px;
         }
         .save-admin-btn {
             background: var(--tally-red);
             color: white;
-            border: none;
-            padding: 12px 20px;
-            cursor: pointer;
-            font-weight: 600;
             width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .tabs-admin {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .tab-admin-btn {
+            background: var(--bg-deep);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 8px 16px;
+            cursor: pointer;
             border-radius: 4px;
+        }
+        .tab-admin-btn.active {
+            background: var(--text-main);
+            color: var(--bg-deep);
+            font-weight: 600;
         }
         #access-denied {
             text-align: center;
@@ -50,7 +98,6 @@
 </head>
 <body>
 
-    <!-- Захист: якщо немає правильного ключа в URL, показуємо помилку -->
     <div id="access-denied" style="display: none;">
         <h2>404 | Доступ заборонено</h2>
         <p>Сюди не можна заходити :)</p>
@@ -58,7 +105,7 @@
 
     <div class="admin-container" id="admin-panel" style="display: none;">
         <h2>Керування Pixel TV</h2>
-        <p style="color: var(--text-muted); margin-bottom: 20px;">Зміни застосуються одразу на головній сторінці.</p>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Налаштування ефіру та розкладу.</p>
 
         <div class="admin-group">
             <label for="live-status-select">Статус ефіру:</label>
@@ -73,31 +120,124 @@
             <input type="text" id="current-show-input" placeholder="Наприклад: Вечірній кіносеанс">
         </div>
 
-        <button class="save-admin-btn" id="save-btn">Зберегти зміни</button>
+        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 25px 0;">
+
+        <h3>Редагування розкладу</h3>
+        <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px;">Обери день, для якого хочеш змінити розклад:</p>
+
+        <div class="tabs-admin">
+            <button class="tab-admin-btn active" onclick="switchAdminDay('today')">Сьогодні</button>
+            <button class="tab-admin-btn" onclick="switchAdminDay('tomorrow')">Завтра</button>
+        </div>
+
+        <div id="schedule-editor-container">
+            <!-- Сюди динамічно завантажуються рядки -->
+        </div>
+
+        <button class="add-row-btn" onclick="addScheduleRow()">+ Додати пункт</button>
+
+        <button class="save-admin-btn" id="save-btn">Зберегти всі зміни</button>
     </div>
 
     <script>
-        // Твій секретний ключ (можеш змінити на будь-який слово чи пароль)
         const SECRET_KEY = "my_super_secret_admin_123";
-
         const urlParams = new URLSearchParams(window.location.search);
-        const userKey = urlParams.get('key');
 
-        if (userKey === SECRET_KEY) {
+        let currentAdminDay = 'today';
+        let scheduleData = {
+            today: [],
+            tomorrow: []
+        };
+
+        if (urlParams.get('key') === SECRET_KEY) {
             document.getElementById('admin-panel').style.display = 'block';
 
-            // Завантажуємо поточні дані з localStorage
+            // Завантаження базових налаштувань
             document.getElementById('live-status-select').value = localStorage.getItem('pixel_is_live') ?? 'true';
             document.getElementById('current-show-input').value = localStorage.getItem('pixel_show_title') ?? 'Кінозал Pixel TV';
 
-            // Зберігаємо зміни
+            // Завантаження збереженого розкладу або стандартного
+            const savedSchedule = localStorage.getItem('pixel_schedule');
+            if (savedSchedule) {
+                scheduleData = JSON.parse(savedSchedule);
+            } else {
+                scheduleData = {
+                    today: [
+                        { time: "12:00", title: "Ранковий мульт-марафон", desc: "Добірка короткометражних анімацій." },
+                        { time: "15:00", title: "Пригодницький фільм", desc: "Захоплива художня стрічка." },
+                        { time: "19:00", title: "Вечірній кіносеанс", desc: "Головний фільм вечора." }
+                    ],
+                    tomorrow: [
+                        { time: "10:00", title: "Дитячий блок", desc: "Мультсеріали зранку." },
+                        { time: "16:00", title: "Фантастичний бойовик", desc: "Видовищні спецтефекти." }
+                    ]
+                };
+            }
+
+            renderScheduleEditor();
+
             document.getElementById('save-btn').addEventListener('click', () => {
                 localStorage.setItem('pixel_is_live', document.getElementById('live-status-select').value);
                 localStorage.setItem('pixel_show_title', document.getElementById('current-show-input').value);
-                alert('Зміни успішно збережено!');
+                
+                saveCurrentEditorToMemory();
+                localStorage.setItem('pixel_schedule', JSON.stringify(scheduleData));
+
+                alert('Зміни успішно збережено та застосовано на сайті!');
             });
+
         } else {
             document.getElementById('access-denied').style.display = 'block';
+        }
+
+        function switchAdminDay(day) {
+            saveCurrentEditorToMemory();
+            currentAdminDay = day;
+            document.querySelectorAll('.tab-admin-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderScheduleEditor();
+        }
+
+        function renderScheduleEditor() {
+            const container = document.getElementById('schedule-editor-container');
+            container.innerHTML = '';
+            
+            const list = scheduleData[currentAdminDay] || [];
+            list.forEach((item, index) => {
+                container.innerHTML += `
+                    <div class="schedule-editor-row" data-index="${index}">
+                        <input type="text" placeholder="Час (напр. 14:00)" value="${item.time}" class="row-time" style="width: 120px;">
+                        <input type="text" placeholder="Назва" value="${item.title}" class="row-title">
+                        <input type="text" placeholder="Опис" value="${item.desc}" class="row-desc">
+                        <button class="del-row-btn" onclick="deleteScheduleRow(${index})">X</button>
+                    </div>
+                `;
+            });
+        }
+
+        function saveCurrentEditorToMemory() {
+            const rows = document.querySelectorAll('.schedule-editor-row');
+            const newList = [];
+            rows.forEach(row => {
+                newList.push({
+                    time: row.querySelector('.row-time').value,
+                    title: row.querySelector('.row-title').value,
+                    desc: row.querySelector('.row-desc').value
+                });
+            });
+            scheduleData[currentAdminDay] = newList;
+        }
+
+        function addScheduleRow() {
+            saveCurrentEditorToMemory();
+            scheduleData[currentAdminDay].push({ time: "20:00", title: "Нова трансляція", desc: "Опис трансляції" });
+            renderScheduleEditor();
+        }
+
+        function deleteScheduleRow(index) {
+            saveCurrentEditorToMemory();
+            scheduleData[currentAdminDay].splice(index, 1);
+            renderScheduleEditor();
         }
     </script>
 </body>

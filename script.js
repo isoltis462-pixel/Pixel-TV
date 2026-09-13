@@ -1,10 +1,5 @@
-/* ==========================================
-   PIXEL TV — Studio Logic (script.js)
-   ========================================== */
-
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Управління кнопками "Нагадати" у розкладі
     window.toggleReminder = function(buttonElement, showName) {
         const isActive = buttonElement.classList.contains('active');
         
@@ -19,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Функція показу спливаючого Toast-повідомлення
     function showToast(message) {
         const toast = document.getElementById('toast-notification');
         if (!toast) return;
@@ -32,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 3000);
     }
 
-    // 2. Перемикання днів у розкладі (ТВ-гід)
     const tabButtons = document.querySelectorAll('.schedule-tabs .tab-btn');
     tabButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -44,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Мобільне меню (Бургер)
     const burgerBtn = document.getElementById('burger-btn');
     const mainNav = document.querySelector('.main-nav');
 

@@ -1,1 +1,614 @@
+/* ==========================================
+   PIXEL TV — Studio Design System (style.css)
+   ========================================== */
 
+:root {
+    --bg-deep: #08080a;
+    --bg-player: #000000;
+    --panel-graphite: #121316;
+    --panel-hover: #1b1d22;
+    --border-color: #272a33;
+    --text-main: #f0f1f5;
+    --text-muted: #9ba1b0;
+    --tally-red: #ff2a2a;
+    --tally-red-glow: rgba(255, 42, 42, 0.35);
+    
+    --font-heading: 'Big Shoulders Display', 'Archivo Expanded', sans-serif;
+    --font-sans: 'IBM Plex Sans', 'Public Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-deep);
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+/* Стартова анімація збірки пікселів логотипу */
+#intro-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-deep);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeOutLoader 0.6s ease 1.2s forwards;
+}
+
+.loader-logo-img {
+    height: 60px;
+    object-fit: contain;
+    animation: assembleLogo 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes assembleLogo {
+    0% {
+        transform: scale(0.6) translateY(20px);
+        opacity: 0;
+        filter: blur(10px);
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+@keyframes fadeOutLoader {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+/* Шапка сайту */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+    background-color: rgba(8, 8, 10, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 1000;
+    transition: background-color 0.3s;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.logo-link img {
+    height: 32px;
+    object-fit: contain;
+}
+
+nav.main-nav {
+    display: flex;
+    gap: 24px;
+}
+
+nav.main-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 18px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+}
+
+nav.main-nav a:hover,
+nav.main-nav a.active {
+    color: var(--text-main);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Сигнальний бейдж В ЕФІРІ */
+.live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(255, 42, 42, 0.15);
+    border: 1px solid var(--tally-red);
+    padding: 6px 12px;
+    border-radius: 0px; /* Геометричні кути */
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--tally-red);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--tally-red);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--tally-red);
+    animation: pulseTally 1.5s infinite;
+}
+
+@keyframes pulseTally {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 42, 42, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(255, 42, 42, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 42, 42, 0); }
+}
+
+.search-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 18px;
+    transition: color 0.2s;
+}
+.search-btn:hover {
+    color: var(--text-main);
+}
+
+.burger-menu {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-main);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Головний контейнер */
+main {
+    margin-top: 72px;
+}
+
+/* Плеєр секція */
+.player-section {
+    width: 100%;
+    background-color: var(--bg-player);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.player-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 80vh;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-container video,
+.player-container iframe {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Екран очікування, коли ефіру немає */
+.offline-screen {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, #15171e 0%, #050507 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.offline-title {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.offline-timer {
+    font-family: var(--font-mono);
+    font-size: 20px;
+    color: var(--tally-red);
+    margin-bottom: 16px;
+}
+
+.offline-desc {
+    color: var(--text-muted);
+    font-size: 14px;
+    max-width: 400px;
+}
+
+/* Інфо під плеєром */
+.broadcast-meta {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.meta-left h1 {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.meta-left p {
+    color: var(--text-muted);
+    font-size: 15px;
+    max-width: 700px;
+}
+
+.meta-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.viewers-counter {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.next-broadcast-teaser {
+    background-color: var(--panel-graphite);
+    border: 1px solid var(--border-color);
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+.next-broadcast-teaser span {
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+/* Розклад (ТВ-гід) */
+.schedule-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.schedule-tabs {
+    display: flex;
+    gap: 8px;
+    background-color: var(--panel-graphite);
+    padding: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 8px 16px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tab-btn:hover,
+.tab-btn.active {
+    background-color: var(--text-main);
+    color: var(--bg-deep);
+    font-weight: 500;
+}
+
+.schedule-timeline {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.schedule-card {
+    background-color: var(--panel-graphite);
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 8px; /* Зручні для сканування скруглені кути для карток */
+    position: relative;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.schedule-card:hover {
+    background-color: var(--panel-hover);
+    border-color: var(--text-muted);
+}
+
+.schedule-card.current {
+    border-color: var(--tally-red);
+    background-color: rgba(255, 42, 42, 0.03);
+}
+
+.schedule-time {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--tally-red);
+    margin-bottom: 8px;
+}
+.schedule-card:not(.current) .schedule-time {
+    color: var(--text-muted);
+}
+
+.schedule-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.schedule-card p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+}
+
+.reminder-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.reminder-btn:hover {
+    border-color: var(--text-main);
+    color: var(--text-main);
+}
+
+.reminder-btn.active {
+    background-color: var(--text-main);
+    color: var(--bg-deep);
+    border-color: var(--text-main);
+}
+
+/* Архів ефірів */
+.archive-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.archive-filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.filter-select {
+    background-color: var(--panel-graphite);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 8px 14px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+}
+
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.archive-card {
+    background-color: var(--panel-graphite);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.archive-card:hover {
+    border-color: var(--text-muted);
+}
+
+.thumbnail-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: #000;
+    overflow: hidden;
+}
+
+.thumbnail-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* За замовчуванням ч/б і приглушені */
+    filter: grayscale(100%) brightness(0.85);
+    transition: filter 0.4s ease;
+}
+
+/* При наведенні мініатюри «оживають» у повному кольорі */
+.archive-card:hover .thumbnail-wrapper img {
+    filter: grayscale(0%) brightness(1);
+}
+
+.play-overlay-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.3);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.archive-card:hover .play-overlay-icon {
+    opacity: 1;
+}
+
+.play-circle {
+    width: 48px;
+    height: 48px;
+    background-color: var(--text-main);
+    color: var(--bg-deep);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    padding-left: 3px; /* Візуальне центрування іконки play */
+}
+
+.archive-meta {
+    padding: 16px;
+}
+
+.archive-info-row {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.archive-meta h3 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Підвал */
+footer {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 24px;
+}
+
+.footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.footer-links a:hover {
+    color: var(--text-main);
+}
+
+/* Toast сповіщення знизу */
+#toast-notification {
+    position: fixed;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--text-main);
+    color: var(--bg-deep);
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: bottom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2000;
+}
+#toast-notification.show {
+    bottom: 30px;
+}
+
+/* Адаптивність */
+@media (max-width: 900px) {
+    header {
+        padding: 0 20px;
+    }
+    nav.main-nav {
+        display: none;
+    }
+    .burger-menu {
+        display: block;
+    }
+    .broadcast-meta {
+        flex-direction: column;
+        padding: 20px;
+        align-items: flex-start;
+    }
+    .meta-right {
+        align-items: flex-start;
+        width: 100%;
+    }
+    .schedule-section, .archive-section {
+        padding: 40px 20px;
+    }
+    footer {
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+        padding: 30px 20px;
+    }
+}

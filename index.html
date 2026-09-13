@@ -28,7 +28,6 @@
             <nav class="main-nav">
                 <a href="#player" class="active">Ефір</a>
                 <a href="#schedule">Розклад</a>
-                <a href="#archive">Архів</a>
                 <a href="#about">Про канал</a>
             </nav>
         </div>
@@ -46,7 +45,7 @@
         <!-- Плеєр секція -->
         <section class="player-section" id="player">
             <div class="player-container">
-                <!-- Відеоплеєр (можна підключити потокове відео або демонстраційне) -->
+                <!-- Відеоплеєр -->
                 <video id="main-video" controls autoplay muted poster="">
                     <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
                     Ваш браузер не підтримує відео плеєр.
@@ -68,7 +67,7 @@
                 </div>
                 <div class="meta-right">
                     <div class="viewers-counter">
-                        <i class="fa-regular fa-eye"></i> <span id="viewers-count">1 234</span> глядачів у прямому ефірі
+                        <i class="fa-regular fa-eye"></i> <span id="viewers-count">1</span> глядач онлайн
                     </div>
                     <div class="next-broadcast-teaser">
                         Далі в ефірі: <span id="next-show-name">Технології майбутнього</span> о <span>20:00</span>
@@ -91,7 +90,6 @@
             </div>
 
             <div class="schedule-timeline" id="schedule-container">
-                <!-- Картки розкладу генеруються або виводяться статично -->
                 <div class="schedule-card">
                     <div class="schedule-time">19:00 — 20:00</div>
                     <h3>Вечірній стрім</h3>
@@ -118,74 +116,6 @@
                     <h3>Нічний піксельний мікс</h3>
                     <p>Розслаблююча музична підбірка для спокійного завершення вечора.</p>
                     <button class="reminder-btn" onclick="toggleReminder(this, 'Нічний піксельний мікс')"><i class="fa-regular fa-bell"></i> Нагадати</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Архів ефірів -->
-        <section class="archive-section" id="archive">
-            <div class="section-header">
-                <h2 class="section-title">Архів ефірів</h2>
-                <div class="archive-filters">
-                    <select class="filter-select" id="category-filter">
-                        <option value="all">Усі категорії</option>
-                        <option value="news">Новини та аналітика</option>
-                        <option value="tech">Технології</option>
-                        <option value="entertainment">Розваги</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="archive-grid">
-                <!-- Картка архіву 1 -->
-                <div class="archive-card">
-                    <div class="thumbnail-wrapper">
-                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop" alt="Архів трансляції">
-                        <div class="play-overlay-icon">
-                            <div class="play-circle"><i class="fa-solid fa-play"></i></div>
-                        </div>
-                    </div>
-                    <div class="archive-meta">
-                        <div class="archive-info-row">
-                            <span>12 вересня 2026</span>
-                            <span>1 год 42 хв</span>
-                        </div>
-                        <h3>Студійний випуск №142: Штучний інтелект у розробці</h3>
-                    </div>
-                </div>
-
-                <!-- Картка архіву 2 -->
-                <div class="archive-card">
-                    <div class="thumbnail-wrapper">
-                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=600&auto=format&fit=crop" alt="Архів трансляції">
-                        <div class="play-overlay-icon">
-                            <div class="play-circle"><i class="fa-solid fa-play"></i></div>
-                        </div>
-                    </div>
-                    <div class="archive-meta">
-                        <div class="archive-info-row">
-                            <span>10 вересня 2026</span>
-                            <span>2 год 15 хв</span>
-                        </div>
-                        <h3>Великий тест нових симуляторів та рулів</h3>
-                    </div>
-                </div>
-
-                <!-- Картка архіву 3 -->
-                <div class="archive-card">
-                    <div class="thumbnail-wrapper">
-                        <img src="https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=600&auto=format&fit=crop" alt="Архів трансляції">
-                        <div class="play-overlay-icon">
-                            <div class="play-circle"><i class="fa-solid fa-play"></i></div>
-                        </div>
-                    </div>
-                    <div class="archive-meta">
-                        <div class="archive-info-row">
-                            <span>08 вересня 2026</span>
-                            <span>1 год 10 хв</span>
-                        </div>
-                        <h3>Вечірній стрім з обговоренням мап та модів</h3>
-                    </div>
                 </div>
             </div>
         </section>

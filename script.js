@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ГОЛОВНИЙ ПЕРЕМИКАЧ ЕФІРУ:
-    // true — ефір іде (показується плеєр і статус "В ефірі")
-    // false — ефір завершено (показується заставка і статус "Ефір завершено")
     const isLiveNow = true; 
 
     const statusBadge = document.getElementById('site-status-badge');
@@ -55,7 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.add('active');
             
             const day = btn.getAttribute('data-day');
-            console.log(`Обрано день: ${day}`);
+            console.log(`Перемкнуто розклад на: ${day}`);
+            // Тут у майбутньому можна буде динамічно змінювати списки для сьогодні/завтра
         });
     });
 

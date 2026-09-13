@@ -70,40 +70,66 @@
                 <div class="schedule-tabs">
                     <button class="tab-btn active" data-day="today">Сьогодні</button>
                     <button class="tab-btn" data-day="tomorrow">Завтра</button>
-                    <button class="tab-btn" data-day="wed">Ср</button>
-                    <button class="tab-btn" data-day="thu">Чт</button>
-                    <button class="tab-btn" data-day="fri">Пт</button>
                 </div>
             </div>
 
-            <div class="schedule-timeline" id="schedule-container">
-                <div class="schedule-card">
-                    <div class="schedule-time">19:00 — 20:00</div>
-                    <h3>Мульт-колаж</h3>
-                    <p>Добірка найкращих короткометражних анімацій та мультфільмів.</p>
-                    <button class="reminder-btn" onclick="toggleReminder(this, 'Мульт-колаж')"><i class="fa-regular fa-bell"></i> Нагадати</button>
+            <!-- Змінено на компактний список (багато елементів вміщається на екрані) -->
+            <div class="schedule-list" id="schedule-container">
+                
+                <div class="schedule-row">
+                    <div class="schedule-time">12:00</div>
+                    <div class="schedule-info">
+                        <h3>Ранковий мульт-марафон (Частина 1)</h3>
+                        <p>Добірка короткометражних анімацій для гарного настрою.</p>
+                    </div>
+                    <button class="reminder-btn" onclick="toggleReminder(this, 'Ранковий мульт-марафон')"><i class="fa-regular fa-bell"></i> Нагадати</button>
                 </div>
 
-                <div class="schedule-card current">
-                    <div class="schedule-time">20:00 — 21:30</div>
-                    <h3>Вечірній кіносеанс</h3>
-                    <p>Художній фільм або архівний запис захопливої трансляції.</p>
+                <div class="schedule-row">
+                    <div class="schedule-time">14:00</div>
+                    <div class="schedule-info">
+                        <h3>Пригодницький фільм: Початок</h3>
+                        <p>Захоплива художня стрічка про подорожі у часі.</p>
+                    </div>
+                    <button class="reminder-btn" onclick="toggleReminder(this, 'Пригодницький фільм')"><i class="fa-regular fa-bell"></i> Нагадати</button>
+                </div>
+
+                <div class="schedule-row">
+                    <div class="schedule-time">16:30</div>
+                    <div class="schedule-info">
+                        <h3>Анімаційний блок: Повні метри</h3>
+                        <p>Популярні повнометражні мультфільми для всієї родини.</p>
+                    </div>
+                    <button class="reminder-btn" onclick="toggleReminder(this, 'Анімаційний блок')"><i class="fa-regular fa-bell"></i> Нагадати</button>
+                </div>
+
+                <div class="schedule-row current">
+                    <div class="schedule-time">19:00</div>
+                    <div class="schedule-info">
+                        <h3>Вечірній кіносеанс (Прем'єра)</h3>
+                        <p>Головний фільм вечора у високій якості на Pixel TV.</p>
+                    </div>
                     <button class="reminder-btn active"><i class="fa-solid fa-check"></i> Нагадали</button>
                 </div>
 
-                <div class="schedule-card">
-                    <div class="schedule-time">21:30 — 23:00</div>
-                    <h3>Кінозал: Повтор</h3>
-                    <p>Показ улюблених глядачами стрічок із нашої відеотеки.</p>
-                    <button class="reminder-btn" onclick="toggleReminder(this, 'Кінозал: Повтор')"><i class="fa-regular fa-bell"></i> Нагадати</button>
+                <div class="schedule-row">
+                    <div class="schedule-time">21:00</div>
+                    <div class="schedule-info">
+                        <h3>Фантастичний бойовик</h3>
+                        <p>Динамічні епізоди та видовищні спецтефекти без реклами.</p>
+                    </div>
+                    <button class="reminder-btn" onclick="toggleReminder(this, 'Фантастичний бойовик')"><i class="fa-regular fa-bell"></i> Нагадати</button>
                 </div>
 
-                <div class="schedule-card">
-                    <div class="schedule-time">23:00 — 00:00</div>
-                    <h3>Нічний піксельний мікс</h3>
-                    <p>Розслаблююча музична підбірка для спокійного завершення вечора.</p>
-                    <button class="reminder-btn" onclick="toggleReminder(this, 'Нічний піксельний мікс')"><i class="fa-regular fa-bell"></i> Нагадати</button>
+                <div class="schedule-row">
+                    <div class="schedule-time">23:00</div>
+                    <div class="schedule-info">
+                        <h3>Нічний кінозал (Архів стріму)</h3>
+                        <p>Запис найкращих моїх проходження ігор або розмовних стрімів.</p>
+                    </div>
+                    <button class="reminder-btn" onclick="toggleReminder(this, 'Нічний кінозал')"><i class="fa-regular fa-bell"></i> Нагадати</button>
                 </div>
+
             </div>
         </section>
     </main>

@@ -1,6 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const isLiveNow = true; 
+    // Читаємо статус з localStorage (якщо нічого не збережено, за замовчуванням true)
+    const savedLiveStatus = localStorage.getItem('pixel_is_live');
+    const isLiveNow = savedLiveStatus !== null ? savedLiveStatus === 'true' : true;
+
+    // Читаємо назву фільму/трансляції, якщо її міняли
+    const savedShowTitle = localStorage.getItem('pixel_show_title');
+    if (savedShowTitle) {
+        const titleElement = document.getElementById('current-show-title');
+        if (titleElement) titleElement.textContent = savedShowTitle;
+    }
 
     const statusBadge = document.getElementById('site-status-badge');
     const statusText = document.getElementById('status-text');
@@ -53,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const day = btn.getAttribute('data-day');
             console.log(`Перемкнуто розклад на: ${day}`);
-            // Тут у майбутньому можна буде динамічно змінювати списки для сьогодні/завтра
         });
     });
 

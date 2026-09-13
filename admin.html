@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel TV — Адмін-панель</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-container {
+            max-width: 600px;
+            margin: 100px auto;
+            background: var(--panel-graphite);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 8px;
+        }
+        .admin-group {
+            margin-bottom: 20px;
+        }
+        .admin-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .admin-group select, .admin-group input {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg-deep);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 4px;
+        }
+        .save-admin-btn {
+            background: var(--tally-red);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            border-radius: 4px;
+        }
+        #access-denied {
+            text-align: center;
+            margin-top: 150px;
+            color: var(--tally-red);
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Захист: якщо немає правильного ключа в URL, показуємо помилку -->
+    <div id="access-denied" style="display: none;">
+        <h2>404 | Доступ заборонено</h2>
+        <p>Сюди не можна заходити :)</p>
+    </div>
+
+    <div class="admin-container" id="admin-panel" style="display: none;">
+        <h2>Керування Pixel TV</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Зміни застосуються одразу на головній сторінці.</p>
+
+        <div class="admin-group">
+            <label for="live-status-select">Статус ефіру:</label>
+            <select id="live-status-select">
+                <option value="true">В ефірі (транслюється)</option>
+                <option value="false">Ефір завершено (заставка)</option>
+            </select>
+        </div>
+
+        <div class="admin-group">
+            <label for="current-show-input">Назва поточної трансляції / фільму:</label>
+            <input type="text" id="current-show-input" placeholder="Наприклад: Вечірній кіносеанс">
+        </div>
+
+        <button class="save-admin-btn" id="save-btn">Зберегти зміни</button>
+    </div>
+
+    <script>
+        // Твій секретний ключ (можеш змінити на будь-який слово чи пароль)
+        const SECRET_KEY = "my_super_secret_admin_123";
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const userKey = urlParams.get('key');
+
+        if (userKey === SECRET_KEY) {
+            document.getElementById('admin-panel').style.display = 'block';
+
+            // Завантажуємо поточні дані з localStorage
+            document.getElementById('live-status-select').value = localStorage.getItem('pixel_is_live') ?? 'true';
+            document.getElementById('current-show-input').value = localStorage.getItem('pixel_show_title') ?? 'Кінозал Pixel TV';
+
+            // Зберігаємо зміни
+            document.getElementById('save-btn').addEventListener('click', () => {
+                localStorage.setItem('pixel_is_live', document.getElementById('live-status-select').value);
+                localStorage.setItem('pixel_show_title', document.getElementById('current-show-input').value);
+                alert('Зміни успішно збережено!');
+            });
+        } else {
+            document.getElementById('access-denied').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -28,8 +28,9 @@
             </nav>
         </div>
         <div class="header-right">
-            <div class="live-badge" id="header-live-badge">
-                <span class="live-dot"></span> В ефірі
+            <!-- Динамічний бейджик статусу ефіру -->
+            <div class="live-badge" id="site-status-badge">
+                <span class="live-dot" id="status-dot"></span> <span id="status-text">В ефірі</span>
             </div>
             <button class="search-btn" title="Пошук"><i class="fa-solid fa-magnifying-glass"></i></button>
             <button class="burger-menu" id="burger-btn"><i class="fa-solid fa-bars"></i></button>
@@ -39,11 +40,13 @@
     <main>
         <section class="player-section" id="player">
             <div class="player-container">
-                <video id="main-video" controls autoplay muted poster="">
+                <!-- Відеоплеєр (відображається, коли є ефір) -->
+                <video id="main-video" controls autoplay muted>
                     <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
                     Ваш браузер не підтримує відео плеєр.
                 </video>
 
+                <!-- Екран очікування (автоматично вмикається, коли ефіру немає) -->
                 <div class="offline-screen" id="offline-screen" style="display: none;">
                     <div class="offline-title">ЕФІР ЗАВЕРШЕНО</div>
                     <div class="offline-timer" id="countdown-timer">НАСТУПНИЙ ВИПУСК ЧЕРЕЗ: 02:14:50</div>
@@ -121,36 +124,6 @@
     </footer>
 
     <div id="toast-notification">Нагадування встановлено!</div>
-
-    <!-- Firebase SDK (фонове підключення бази даних) -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getDatabase, ref, push, onDisconnect } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAmCzZAEKq4BMo6eWAN96IawhF95cH1sHM",
-            authDomain: "keysbrawl-c4ae6.firebaseapp.com",
-            databaseURL: "https://keysbrawl-c4ae6-default-rtdb.firebaseio.com",
-            projectId: "keysbrawl-c4ae6",
-            storageBucket: "keysbrawl-c4ae6.firebasestorage.app",
-            messagingSenderId: "1090859079662",
-            appId: "1:1090859079662:web:932bf6463cb0601083a0ff",
-            measurementId: "G-PJR0BQBYVM"
-        };
-
-        try {
-            const app = initializeApp(firebaseConfig);
-            const db = getDatabase(app);
-            
-            // Фіксація активної сесії у базі
-            const connectionsRef = ref(db, 'counter/active_connections');
-            const myConnectionRef = push(connectionsRef);
-            onDisconnect(myConnectionRef).remove();
-        } catch (e) {
-            console.error("Firebase connection error:", e);
-        }
-    </script>
-
     <script src="script.js"></script>
 </body>
 </html>
